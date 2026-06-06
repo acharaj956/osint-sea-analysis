@@ -1,8 +1,12 @@
 # OSINT Southeast Asia Crime Analysis Dashboard
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://osint-sea-analysis.streamlit.app)
+
 An open-source intelligence (OSINT) analytical tool that demonstrates monitoring
 and analysis of transnational organized crime in Southeast Asia, with a focus on
 cryptocurrency-enabled financial flows and regional drug trafficking patterns.
+
+**▶ Live demo:** https://osint-sea-analysis.streamlit.app
 
 > ⚠️ **Important — read first**
 >
