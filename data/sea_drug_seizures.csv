@@ -1,0 +1,149 @@
+id,date,country,province,city,lat,lon,drug_type,quantity,unit,estimated_value_usd,seizure_context,provenance,source_reliability,info_credibility,admiralty_rating
+1,2019-01-14,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Methamphetamine (tablets),2200000,tablets,6600000,Border checkpoint,Synthetic (illustrative),B,2,B2
+2,2019-02-08,Myanmar,Shan State,Tachileik,20.4478,99.9358,Heroin,85,kg,3400000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+3,2019-02-22,Thailand,Bangkok,Bangkok,13.7563,100.5018,Crystal Methamphetamine,340,kg,17000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+4,2019-03-05,Philippines,Metro Manila,Manila,14.5995,120.9842,Crystal Methamphetamine,200,kg,10000000,Port seizure,Synthetic (illustrative),D,3,D3
+5,2019-03-19,Vietnam,Dien Bien,Dien Bien,21.386,103.023,Heroin,120,kg,4800000,Border checkpoint,Synthetic (illustrative),B,2,B2
+6,2019-04-02,Malaysia,Kuala Lumpur,Kuala Lumpur,3.139,101.6869,Crystal Methamphetamine,150,kg,7500000,Airport seizure,Synthetic (illustrative),B,2,B2
+7,2019-04-11,Laos,Bokeo,Bokeo,20.2833,100.4333,Methamphetamine (tablets),5500000,tablets,16500000,Border checkpoint,Synthetic (illustrative),B,2,B2
+8,2019-04-25,Indonesia,DKI Jakarta,Jakarta,-6.2088,106.8456,Crystal Methamphetamine,80,kg,4000000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+9,2019-05-10,Thailand,Nakhon Phanom,Nakhon Phanom,17.4048,104.7692,Methamphetamine (tablets),9000000,tablets,27000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+10,2019-05-28,Cambodia,Phnom Penh,Phnom Penh,11.5564,104.9282,Ketamine,45,kg,900000,Warehouse raid,Synthetic (illustrative),D,3,D3
+11,2019-06-14,Myanmar,Shan State,Lashio,22.9362,97.75,Methamphetamine (tablets),12000000,tablets,36000000,Lab dismantlement,Synthetic (illustrative),B,2,B2
+12,2019-06-30,Thailand,Tak,Tak,16.884,99.1258,Heroin,38,kg,1520000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+13,2019-07-09,Vietnam,Ho Chi Minh City,Ho Chi Minh City,10.8231,106.6297,Crystal Methamphetamine,60,kg,3000000,Port seizure,Synthetic (illustrative),B,2,B2
+14,2019-07-22,Philippines,Cebu,Cebu,10.3157,123.8854,Crystal Methamphetamine,45,kg,2250000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+15,2019-08-05,Thailand,Chiang Mai,Chiang Mai,18.7883,98.9853,Methamphetamine (tablets),4500000,tablets,13500000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+16,2019-08-18,Malaysia,Johor,Johor Bahru,1.4927,103.7414,MDMA/Ecstasy,30,kg,600000,Port seizure,Synthetic (illustrative),B,2,B2
+17,2019-09-01,Indonesia,North Sumatra,Medan,3.5952,98.6722,Crystal Methamphetamine,55,kg,2750000,Intelligence-led raid,Synthetic (illustrative),D,3,D3
+18,2019-09-15,Myanmar,Mandalay,Mandalay,21.9588,96.0891,Heroin,200,kg,8000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+19,2019-10-03,Thailand,Bangkok,Bangkok,13.7563,100.5018,Ketamine,80,kg,1600000,Airport seizure,Synthetic (illustrative),B,2,B2
+20,2019-10-20,Laos,Vientiane,Vientiane,17.9757,102.6331,Methamphetamine (tablets),3000000,tablets,9000000,Vehicle checkpoint,Synthetic (illustrative),C,2,C2
+21,2019-11-08,Cambodia,Preah Sihanouk,Preah Sihanouk,10.6093,103.5228,Crystal Methamphetamine,18,kg,900000,Warehouse raid,Synthetic (illustrative),D,3,D3
+22,2019-11-25,Vietnam,Nghe An,Nghe An,18.6768,105.6813,Heroin,65,kg,2600000,Border checkpoint,Synthetic (illustrative),B,2,B2
+23,2019-12-10,Thailand,Mukdahan,Mukdahan,16.5426,104.7235,Methamphetamine (tablets),6500000,tablets,19500000,Border checkpoint,Synthetic (illustrative),B,2,B2
+24,2019-12-28,Philippines,Davao,Davao,7.1907,125.4553,Crystal Methamphetamine,28,kg,1400000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+25,2020-01-15,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Methamphetamine (tablets),15000000,tablets,45000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+26,2020-01-29,Myanmar,Shan State,Muse,23.9881,97.8536,Crystal Methamphetamine,500,kg,25000000,Lab dismantlement,Synthetic (illustrative),B,2,B2
+27,2020-02-12,Malaysia,Penang,Penang,5.4141,100.3288,Ketamine,120,kg,2400000,Port seizure,Synthetic (illustrative),B,2,B2
+28,2020-03-01,Thailand,Bangkok,Bangkok,13.7563,100.5018,Crystal Methamphetamine,450,kg,22500000,Warehouse raid,Synthetic (illustrative),B,2,B2
+29,2020-03-18,Laos,Phongsali,Phongsali,21.6822,102.1005,Methamphetamine (tablets),8000000,tablets,24000000,Border checkpoint,Synthetic (illustrative),C,2,C2
+30,2020-04-05,Indonesia,Riau Islands,Batam,1.0456,104.0305,MDMA/Ecstasy,55,kg,1100000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+31,2020-04-20,Cambodia,Phnom Penh,Phnom Penh,11.5564,104.9282,Ketamine,90,kg,1800000,Intelligence-led raid,Synthetic (illustrative),D,3,D3
+32,2020-05-08,Vietnam,Ha Tinh,Ha Tinh,18.3559,105.8878,Heroin,45,kg,1800000,Border checkpoint,Synthetic (illustrative),B,2,B2
+33,2020-05-22,Thailand,Nong Khai,Nong Khai,17.8782,102.7445,Methamphetamine (tablets),11000000,tablets,33000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+34,2020-06-10,Philippines,Metro Manila,Manila,14.5995,120.9842,Crystal Methamphetamine,320,kg,16000000,Controlled delivery,Synthetic (illustrative),B,2,B2
+35,2020-06-25,Myanmar,Shan State,Tachileik,20.4478,99.9358,Methamphetamine (tablets),20000000,tablets,60000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+36,2020-07-14,Thailand,Chiang Mai,Chiang Mai,18.7883,98.9853,Heroin,22,kg,880000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+37,2020-07-30,Malaysia,Kuala Lumpur,Kuala Lumpur,3.139,101.6869,Crystal Methamphetamine,210,kg,10500000,Airport seizure,Synthetic (illustrative),B,2,B2
+38,2020-08-12,Indonesia,DKI Jakarta,Jakarta,-6.2088,106.8456,MDMA/Ecstasy,85,kg,1700000,Warehouse raid,Synthetic (illustrative),B,2,B2
+39,2020-08-28,Thailand,Bangkok,Bangkok,13.7563,100.5018,Cannabis,250,kg,750000,Street operation,Synthetic (illustrative),D,3,D3
+40,2020-09-10,Vietnam,Hanoi,Hanoi,21.0285,105.8542,Crystal Methamphetamine,75,kg,3750000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+41,2020-09-25,Laos,Luang Namtha,Luang Namtha,20.95,101.4167,Methamphetamine (tablets),6000000,tablets,18000000,Border checkpoint,Synthetic (illustrative),C,2,C2
+42,2020-10-15,Cambodia,Kandal,Kandal,11.2227,104.8522,Crystal Methamphetamine,35,kg,1750000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+43,2020-11-02,Thailand,Tak,Tak,16.884,99.1258,Crystal Methamphetamine,180,kg,9000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+44,2020-11-20,Myanmar,Yangon,Yangon,16.8661,96.1951,Heroin,150,kg,6000000,Port seizure,Synthetic (illustrative),B,2,B2
+45,2020-12-08,Philippines,Zamboanga,Zamboanga,6.9214,122.079,Crystal Methamphetamine,40,kg,2000000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+46,2020-12-22,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Methamphetamine (tablets),18000000,tablets,54000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+47,2021-01-10,Thailand,Bangkok,Bangkok,13.7563,100.5018,Crystal Methamphetamine,580,kg,29000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+48,2021-01-28,Myanmar,Shan State,Lashio,22.9362,97.75,Methamphetamine (tablets),30000000,tablets,90000000,Lab dismantlement,Synthetic (illustrative),B,2,B2
+49,2021-02-14,Malaysia,Johor,Johor Bahru,1.4927,103.7414,Crystal Methamphetamine,280,kg,14000000,Port seizure,Synthetic (illustrative),B,2,B2
+50,2021-02-28,Laos,Bokeo,Bokeo,20.2833,100.4333,Methamphetamine (tablets),14000000,tablets,42000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+51,2021-03-12,Vietnam,Dien Bien,Dien Bien,21.386,103.023,Heroin,95,kg,3800000,Border checkpoint,Synthetic (illustrative),B,2,B2
+52,2021-03-25,Cambodia,Phnom Penh,Phnom Penh,11.5564,104.9282,Ketamine,200,kg,4000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+53,2021-04-08,Indonesia,DKI Jakarta,Jakarta,-6.2088,106.8456,Crystal Methamphetamine,120,kg,6000000,Controlled delivery,Synthetic (illustrative),B,2,B2
+54,2021-04-22,Thailand,Nakhon Phanom,Nakhon Phanom,17.4048,104.7692,Methamphetamine (tablets),22000000,tablets,66000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+55,2021-05-10,Philippines,Metro Manila,Manila,14.5995,120.9842,Crystal Methamphetamine,400,kg,20000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+56,2021-05-25,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Heroin,15,kg,600000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+57,2021-06-08,Myanmar,Shan State,Muse,23.9881,97.8536,Crystal Methamphetamine,750,kg,37500000,Border checkpoint,Synthetic (illustrative),B,2,B2
+58,2021-06-22,Malaysia,Kuala Lumpur,Kuala Lumpur,3.139,101.6869,Ketamine,180,kg,3600000,Airport seizure,Synthetic (illustrative),B,2,B2
+59,2021-07-05,Thailand,Bangkok,Bangkok,13.7563,100.5018,Cocaine,12,kg,720000,Airport seizure,Synthetic (illustrative),B,2,B2
+60,2021-07-18,Indonesia,North Sumatra,Medan,3.5952,98.6722,Crystal Methamphetamine,90,kg,4500000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+61,2021-08-02,Vietnam,Ho Chi Minh City,Ho Chi Minh City,10.8231,106.6297,Crystal Methamphetamine,110,kg,5500000,Port seizure,Synthetic (illustrative),B,2,B2
+62,2021-08-16,Laos,Vientiane,Vientiane,17.9757,102.6331,Methamphetamine (tablets),10000000,tablets,30000000,Controlled delivery,Synthetic (illustrative),C,2,C2
+63,2021-09-01,Thailand,Mukdahan,Mukdahan,16.5426,104.7235,Methamphetamine (tablets),25000000,tablets,75000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+64,2021-09-15,Cambodia,Preah Sihanouk,Preah Sihanouk,10.6093,103.5228,Ketamine,350,kg,7000000,Warehouse raid,Synthetic (illustrative),D,3,D3
+65,2021-10-01,Philippines,Cebu,Cebu,10.3157,123.8854,Crystal Methamphetamine,65,kg,3250000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+66,2021-10-18,Thailand,Chiang Mai,Chiang Mai,18.7883,98.9853,Methamphetamine (tablets),8000000,tablets,24000000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+67,2021-11-04,Myanmar,Mandalay,Mandalay,21.9588,96.0891,Heroin,110,kg,4400000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+68,2021-11-22,Malaysia,Sabah,Kota Kinabalu,5.9804,116.0735,Crystal Methamphetamine,60,kg,3000000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+69,2021-12-08,Thailand,Bangkok,Bangkok,13.7563,100.5018,Ketamine,150,kg,3000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+70,2021-12-20,Indonesia,Riau Islands,Batam,1.0456,104.0305,Crystal Methamphetamine,45,kg,2250000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+71,2022-01-12,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Methamphetamine (tablets),35000000,tablets,105000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+72,2022-01-28,Myanmar,Shan State,Tachileik,20.4478,99.9358,Crystal Methamphetamine,1200,kg,60000000,Lab dismantlement,Synthetic (illustrative),B,2,B2
+73,2022-02-10,Cambodia,Phnom Penh,Phnom Penh,11.5564,104.9282,Ketamine,500,kg,10000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+74,2022-02-25,Thailand,Bangkok,Bangkok,13.7563,100.5018,Crystal Methamphetamine,900,kg,45000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+75,2022-03-08,Laos,Bokeo,Bokeo,20.2833,100.4333,Methamphetamine (tablets),20000000,tablets,60000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+76,2022-03-22,Vietnam,Nghe An,Nghe An,18.6768,105.6813,Heroin,55,kg,2200000,Border checkpoint,Synthetic (illustrative),B,2,B2
+77,2022-04-05,Philippines,Metro Manila,Manila,14.5995,120.9842,Crystal Methamphetamine,500,kg,25000000,Controlled delivery,Synthetic (illustrative),B,2,B2
+78,2022-04-18,Malaysia,Kuala Lumpur,Kuala Lumpur,3.139,101.6869,Ketamine,250,kg,5000000,Airport seizure,Synthetic (illustrative),B,2,B2
+79,2022-05-02,Thailand,Nakhon Phanom,Nakhon Phanom,17.4048,104.7692,Methamphetamine (tablets),50000000,tablets,150000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+80,2022-05-15,Indonesia,DKI Jakarta,Jakarta,-6.2088,106.8456,Crystal Methamphetamine,180,kg,9000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+81,2022-05-28,Cambodia,Preah Sihanouk,Preah Sihanouk,10.6093,103.5228,Crystal Methamphetamine,75,kg,3750000,Warehouse raid,Synthetic (illustrative),B,2,B2
+82,2022-06-10,Thailand,Tak,Tak,16.884,99.1258,Crystal Methamphetamine,350,kg,17500000,Border checkpoint,Synthetic (illustrative),B,2,B2
+83,2022-06-22,Myanmar,Shan State,Lashio,22.9362,97.75,Fentanyl,5,kg,375000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+84,2022-07-05,Thailand,Bangkok,Bangkok,13.7563,100.5018,Ketamine,300,kg,6000000,Port seizure,Synthetic (illustrative),B,2,B2
+85,2022-07-18,Vietnam,Hanoi,Hanoi,21.0285,105.8542,Crystal Methamphetamine,130,kg,6500000,Controlled delivery,Synthetic (illustrative),B,2,B2
+86,2022-08-01,Laos,Phongsali,Phongsali,21.6822,102.1005,Methamphetamine (tablets),12000000,tablets,36000000,Border checkpoint,Synthetic (illustrative),C,2,C2
+87,2022-08-15,Philippines,Davao,Davao,7.1907,125.4553,Crystal Methamphetamine,55,kg,2750000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+88,2022-09-01,Thailand,Chiang Mai,Chiang Mai,18.7883,98.9853,Cannabis,180,kg,540000,Vehicle checkpoint,Synthetic (illustrative),D,3,D3
+89,2022-09-14,Cambodia,Kampong Cham,Kampong Cham,11.9889,105.4633,Methamphetamine (tablets),8000000,tablets,24000000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+90,2022-09-28,Malaysia,Penang,Penang,5.4141,100.3288,Crystal Methamphetamine,190,kg,9500000,Port seizure,Synthetic (illustrative),B,2,B2
+91,2022-10-12,Thailand,Nong Khai,Nong Khai,17.8782,102.7445,Methamphetamine (tablets),40000000,tablets,120000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+92,2022-10-25,Indonesia,North Sumatra,Medan,3.5952,98.6722,MDMA/Ecstasy,120,kg,2400000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+93,2022-11-08,Myanmar,Yangon,Yangon,16.8661,96.1951,Methamphetamine (tablets),15000000,tablets,45000000,Port seizure,Synthetic (illustrative),B,2,B2
+94,2022-11-22,Thailand,Bangkok,Bangkok,13.7563,100.5018,Fentanyl,2,kg,150000,Airport seizure,Synthetic (illustrative),B,2,B2
+95,2022-12-05,Cambodia,Phnom Penh,Phnom Penh,11.5564,104.9282,Ketamine,800,kg,16000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+96,2022-12-18,Vietnam,Ho Chi Minh City,Ho Chi Minh City,10.8231,106.6297,Ketamine,60,kg,1200000,Port seizure,Synthetic (illustrative),B,2,B2
+97,2023-01-10,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Methamphetamine (tablets),55000000,tablets,165000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+98,2023-01-25,Myanmar,Shan State,Muse,23.9881,97.8536,Crystal Methamphetamine,1800,kg,90000000,Lab dismantlement,Synthetic (illustrative),B,2,B2
+99,2023-02-08,Cambodia,Preah Sihanouk,Preah Sihanouk,10.6093,103.5228,Ketamine,1200,kg,24000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+100,2023-02-22,Thailand,Bangkok,Bangkok,13.7563,100.5018,Crystal Methamphetamine,1100,kg,55000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+101,2023-03-05,Laos,Bokeo,Bokeo,20.2833,100.4333,Methamphetamine (tablets),33000000,tablets,99000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+102,2023-03-18,Philippines,Metro Manila,Manila,14.5995,120.9842,Crystal Methamphetamine,600,kg,30000000,Controlled delivery,Synthetic (illustrative),B,2,B2
+103,2023-04-02,Malaysia,Johor,Johor Bahru,1.4927,103.7414,Ketamine,320,kg,6400000,Port seizure,Synthetic (illustrative),B,2,B2
+104,2023-04-15,Vietnam,Dien Bien,Dien Bien,21.386,103.023,Heroin,40,kg,1600000,Border checkpoint,Synthetic (illustrative),B,2,B2
+105,2023-04-28,Thailand,Mukdahan,Mukdahan,16.5426,104.7235,Methamphetamine (tablets),45000000,tablets,135000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+106,2023-05-12,Indonesia,DKI Jakarta,Jakarta,-6.2088,106.8456,Crystal Methamphetamine,250,kg,12500000,Controlled delivery,Synthetic (illustrative),B,2,B2
+107,2023-05-25,Cambodia,Phnom Penh,Phnom Penh,11.5564,104.9282,Crystal Methamphetamine,160,kg,8000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+108,2023-06-08,Thailand,Nakhon Phanom,Nakhon Phanom,17.4048,104.7692,Crystal Methamphetamine,680,kg,34000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+109,2023-06-20,Myanmar,Shan State,Tachileik,20.4478,99.9358,Fentanyl,12,kg,900000,Border checkpoint,Synthetic (illustrative),B,2,B2
+110,2023-07-04,Thailand,Bangkok,Bangkok,13.7563,100.5018,Ketamine,500,kg,10000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+111,2023-07-18,Malaysia,Kuala Lumpur,Kuala Lumpur,3.139,101.6869,Crystal Methamphetamine,340,kg,17000000,Airport seizure,Synthetic (illustrative),B,2,B2
+112,2023-08-01,Laos,Luang Namtha,Luang Namtha,20.95,101.4167,Methamphetamine (tablets),18000000,tablets,54000000,Border checkpoint,Synthetic (illustrative),C,2,C2
+113,2023-08-14,Indonesia,Riau Islands,Batam,1.0456,104.0305,Crystal Methamphetamine,100,kg,5000000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+114,2023-08-28,Philippines,Cebu,Cebu,10.3157,123.8854,Crystal Methamphetamine,80,kg,4000000,Port seizure,Synthetic (illustrative),B,2,B2
+115,2023-09-10,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Crystal Methamphetamine,1500,kg,75000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+116,2023-09-24,Cambodia,Kandal,Kandal,11.2227,104.8522,Ketamine,600,kg,12000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+117,2023-10-08,Vietnam,Ho Chi Minh City,Ho Chi Minh City,10.8231,106.6297,Crystal Methamphetamine,200,kg,10000000,Port seizure,Synthetic (illustrative),B,2,B2
+118,2023-10-22,Thailand,Tak,Tak,16.884,99.1258,Methamphetamine (tablets),60000000,tablets,180000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+119,2023-11-05,Myanmar,Mandalay,Mandalay,21.9588,96.0891,Heroin,70,kg,2800000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+120,2023-11-18,Thailand,Bangkok,Bangkok,13.7563,100.5018,Cocaine,25,kg,1500000,Airport seizure,Synthetic (illustrative),B,2,B2
+121,2023-12-02,Cambodia,Preah Sihanouk,Preah Sihanouk,10.6093,103.5228,Ketamine,900,kg,18000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+122,2023-12-15,Malaysia,Penang,Penang,5.4141,100.3288,Ketamine,200,kg,4000000,Port seizure,Synthetic (illustrative),B,2,B2
+123,2024-01-08,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Methamphetamine (tablets),80000000,tablets,240000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+124,2024-01-22,Myanmar,Shan State,Lashio,22.9362,97.75,Crystal Methamphetamine,2200,kg,110000000,Lab dismantlement,Synthetic (illustrative),B,2,B2
+125,2024-02-05,Cambodia,Phnom Penh,Phnom Penh,11.5564,104.9282,Ketamine,1500,kg,30000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+126,2024-02-18,Thailand,Bangkok,Bangkok,13.7563,100.5018,Crystal Methamphetamine,1400,kg,70000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+127,2024-03-04,Laos,Bokeo,Bokeo,20.2833,100.4333,Methamphetamine (tablets),45000000,tablets,135000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+128,2024-03-18,Philippines,Metro Manila,Manila,14.5995,120.9842,Crystal Methamphetamine,750,kg,37500000,Controlled delivery,Synthetic (illustrative),B,2,B2
+129,2024-04-01,Vietnam,Nghe An,Nghe An,18.6768,105.6813,Heroin,30,kg,1200000,Border checkpoint,Synthetic (illustrative),B,2,B2
+130,2024-04-14,Thailand,Nakhon Phanom,Nakhon Phanom,17.4048,104.7692,Methamphetamine (tablets),70000000,tablets,210000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+131,2024-04-28,Malaysia,Kuala Lumpur,Kuala Lumpur,3.139,101.6869,Ketamine,400,kg,8000000,Airport seizure,Synthetic (illustrative),B,2,B2
+132,2024-05-10,Indonesia,DKI Jakarta,Jakarta,-6.2088,106.8456,Crystal Methamphetamine,300,kg,15000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+133,2024-05-24,Cambodia,Preah Sihanouk,Preah Sihanouk,10.6093,103.5228,Crystal Methamphetamine,220,kg,11000000,Warehouse raid,Synthetic (illustrative),B,2,B2
+134,2024-06-06,Thailand,Chiang Mai,Chiang Mai,18.7883,98.9853,Methamphetamine (tablets),35000000,tablets,105000000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+135,2024-06-20,Myanmar,Shan State,Muse,23.9881,97.8536,Fentanyl,25,kg,1875000,Border checkpoint,Synthetic (illustrative),B,2,B2
+136,2024-07-04,Thailand,Bangkok,Bangkok,13.7563,100.5018,Ketamine,700,kg,14000000,Port seizure,Synthetic (illustrative),B,2,B2
+137,2024-07-18,Cambodia,Kampong Cham,Kampong Cham,11.9889,105.4633,Ketamine,450,kg,9000000,Vehicle checkpoint,Synthetic (illustrative),B,2,B2
+138,2024-08-01,Laos,Vientiane,Vientiane,17.9757,102.6331,Methamphetamine (tablets),25000000,tablets,75000000,Controlled delivery,Synthetic (illustrative),C,2,C2
+139,2024-08-15,Philippines,Davao,Davao,7.1907,125.4553,Crystal Methamphetamine,95,kg,4750000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+140,2024-08-28,Thailand,Mukdahan,Mukdahan,16.5426,104.7235,Crystal Methamphetamine,800,kg,40000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+141,2024-09-10,Vietnam,Hanoi,Hanoi,21.0285,105.8542,Fentanyl,3,kg,225000,Airport seizure,Synthetic (illustrative),B,2,B2
+142,2024-09-24,Indonesia,Bali,Denpasar,-8.65,115.2167,Cocaine,8,kg,480000,Airport seizure,Synthetic (illustrative),D,3,D3
+143,2024-10-08,Thailand,Nong Khai,Nong Khai,17.8782,102.7445,Methamphetamine (tablets),90000000,tablets,270000000,Border checkpoint,Synthetic (illustrative),B,2,B2
+144,2024-10-22,Cambodia,Phnom Penh,Phnom Penh,11.5564,104.9282,Crystal Methamphetamine,280,kg,14000000,Intelligence-led raid,Synthetic (illustrative),B,2,B2
+145,2024-11-05,Myanmar,Yangon,Yangon,16.8661,96.1951,Fentanyl,15,kg,1125000,Port seizure,Synthetic (illustrative),B,2,B2
+146,2024-11-18,Thailand,Bangkok,Bangkok,13.7563,100.5018,Fentanyl,8,kg,600000,Controlled delivery,Synthetic (illustrative),B,2,B2
+147,2024-11-30,Malaysia,Sabah,Kota Kinabalu,5.9804,116.0735,Crystal Methamphetamine,150,kg,7500000,Maritime interdiction,Synthetic (illustrative),B,2,B2
+148,2024-12-10,Thailand,Chiang Rai,Chiang Rai,19.9105,99.8406,Crystal Methamphetamine,2500,kg,125000000,Border checkpoint,Synthetic (illustrative),B,2,B2
