@@ -1,0 +1,9 @@
+# Normalise line endings on every platform.
+#
+# This is a correctness requirement, not a style preference. The evidence
+# register hashes files on disk and compares them against the SHA-256 baselines
+# in data/evidence_manifest.json. If a Windows checkout produced CRLF while
+# Linux produced LF, the same committed file would hash differently on the two
+# platforms and the custody check would report ALTERED for an untouched file.
+# Pinning the working-tree ending to LF keeps those baselines valid everywhere.
+* text=auto eol=lf
