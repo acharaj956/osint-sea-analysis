@@ -45,6 +45,8 @@ from src.evidence import (
 )
 from src.reporting import build_analyst_report
 
+MAP_HEIGHT = 550
+
 DISCLAIMER = (
     "Independent demonstration project — not affiliated with, endorsed by, or "
     "representing UNODC or the United Nations. All data shown is "
@@ -381,7 +383,17 @@ def render_crime_map():
     else:
         folium.LayerControl(collapsed=False).add_to(m)
 
-    st_folium(m, use_container_width=True, height=550, returned_objects=[])
+    # streamlit-folium passes `height` to the component as data and relies on the
+    # component's JS to report its frame height back to Streamlit. On current
+    # versions that callback does not fire, so the iframe stays collapsed at 0px
+    # and the map is invisible even though its tiles have loaded. Pin the iframe
+    # height so the map is actually displayed.
+    st.markdown(
+        f'<style>iframe[title="streamlit_folium.st_folium"]'
+        f'{{ height: {MAP_HEIGHT}px !important; }}</style>',
+        unsafe_allow_html=True,
+    )
+    st_folium(m, use_container_width=True, height=MAP_HEIGHT, returned_objects=[])
 
     st.markdown("---")
 
