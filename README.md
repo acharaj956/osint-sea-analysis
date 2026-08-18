@@ -21,6 +21,52 @@ cryptocurrency-enabled financial flows and regional drug trafficking patterns.
 >   demonstration. **Nothing here should be cited as fact.**
 > - No classified, restricted, or non-public information is included.
 
+## Screenshots
+
+### Hypothesis testing — Analysis of Competing Hypotheses
+
+Explanations are ranked by the evidence *against* them. Here the leading
+hypothesis is only 0.16 ahead of its nearest rival, so the interface says so
+rather than presenting a single confident answer.
+
+![ACH page: hypothesis ranking summary and close-margin caution](docs/screenshots/hypothesis-testing.png)
+
+The evidence matrix scores every item against every hypothesis, weighted by its
+Admiralty rating. `E1` — the observation that prompted the question in the first
+place — scores identically against all four hypotheses, so its diagnosticity is
+0.00 and it is excluded from scoring.
+
+![ACH evidence matrix with per-item diagnosticity](docs/screenshots/hypothesis-testing-matrix.png)
+
+Sensitivity analysis removes each item in turn and re-ranks. It reports that the
+conclusion rests entirely on `E2`: without that one item the leading hypothesis
+changes. That dependency is disclosed rather than buried.
+
+![Diagnosticity ranking and sensitivity analysis flagging load-bearing evidence](docs/screenshots/hypothesis-testing-sensitivity.png)
+
+### Event chronology
+
+Events in time order with per-entry source ratings, a timeline sized by
+estimated value, and detection of intervals with no recorded activity.
+
+![Event chronology page with timeline chart](docs/screenshots/event-chronology.png)
+
+### Evidence register
+
+Chain-of-custody record with live SHA-256 verification. Hashes are recomputed
+from the files on disk and compared against a committed manifest, so editing any
+registered artifact makes this page report `ALTERED`.
+
+![Evidence register showing all artifacts verified against their SHA-256 baseline](docs/screenshots/evidence-register.png)
+
+### Crime incident map
+
+![Crime incident map of Southeast Asia with seizure markers](docs/screenshots/crime-incident-map.png)
+
+### Crypto wallet tracer
+
+![Crypto wallet tracer showing an illustrative sanctioned wallet](docs/screenshots/crypto-wallet-tracer.png)
+
 ## Features
 
 ### Crypto Wallet Tracer
