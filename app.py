@@ -18,6 +18,32 @@ from src.blockchain.typologies import detect_typologies
 from src.blockchain.demo_data import DEMO_TRANSACTIONS, DEMO_SUMMARIES
 from src.crime_map.loader import load_seizure_data, apply_filters, get_filter_options, compute_statistics
 from src.crime_map.builder import create_base_map, add_marker_layer, add_heatmap_layer
+from src.analysis.ach import (
+    SCORE_LABELS,
+    diagnosticity_ranking,
+    matrix_rows,
+    non_diagnostic_evidence,
+    score_scenario,
+    sensitivity_analysis,
+)
+from src.analysis.scenarios import SCENARIOS
+from src.analysis.chronology import (
+    build_chronology,
+    build_tempo_figure,
+    build_timeline_figure,
+    reliability_profile,
+    temporal_gaps,
+)
+from src.evidence import (
+    STATUS_ALTERED,
+    STATUS_MISSING,
+    STATUS_VERIFIED,
+    custody_log,
+    load_manifest,
+    register_summary,
+    verify_register,
+)
+from src.reporting import build_analyst_report
 
 DISCLAIMER = (
     "Independent demonstration project — not affiliated with, endorsed by, or "
@@ -244,6 +270,60 @@ def render_wallet_tracer():
         )
 
 
+def _sidebar_filters(df, *, heatmap_toggle: bool = False):
+    """Render the shared scope filters and return the filtered frame.
+
+    Widget keys are fixed so a scope selected on one page carries over when the
+    analyst switches to another — the filters define the scope of the whole
+    assessment, not of a single view.
+    """
+    filter_opts = get_filter_options(df)
+
+    with st.sidebar:
+        st.markdown("### Filters")
+
+        selected_countries = st.multiselect(
+            "Countries",
+            options=filter_opts["countries"],
+            default=None,
+            placeholder="All countries",
+            key="filter_countries",
+        )
+
+        selected_years = st.multiselect(
+            "Years",
+            options=filter_opts["years"],
+            default=None,
+            placeholder="All years",
+            key="filter_years",
+        )
+
+        selected_drugs = st.multiselect(
+            "Drug Types",
+            options=filter_opts["drug_types"],
+            default=None,
+            placeholder="All drug types",
+            key="filter_drugs",
+        )
+
+        show_heatmap = (
+            st.toggle("Show heatmap layer", value=False) if heatmap_toggle else False
+        )
+
+    filtered = apply_filters(
+        df,
+        selected_countries or None,
+        selected_years or None,
+        selected_drugs or None,
+    )
+    filters = {
+        "Countries": selected_countries,
+        "Years": selected_years,
+        "Drug types": selected_drugs,
+    }
+    return filtered, filters, show_heatmap
+
+
 def render_crime_map():
     st.markdown(
         page_header(
@@ -255,40 +335,7 @@ def render_crime_map():
     st.caption(f":warning: {DISCLAIMER}")
 
     df = load_seizure_data()
-    filter_opts = get_filter_options(df)
-
-    with st.sidebar:
-        st.markdown("### Filters")
-
-        selected_countries = st.multiselect(
-            "Countries",
-            options=filter_opts["countries"],
-            default=None,
-            placeholder="All countries",
-        )
-
-        selected_years = st.multiselect(
-            "Years",
-            options=filter_opts["years"],
-            default=None,
-            placeholder="All years",
-        )
-
-        selected_drugs = st.multiselect(
-            "Drug Types",
-            options=filter_opts["drug_types"],
-            default=None,
-            placeholder="All drug types",
-        )
-
-        show_heatmap = st.toggle("Show heatmap layer", value=False)
-
-    filtered = apply_filters(
-        df,
-        selected_countries or None,
-        selected_years or None,
-        selected_drugs or None,
-    )
+    filtered, _filters, show_heatmap = _sidebar_filters(df, heatmap_toggle=True)
 
     stats = compute_statistics(filtered)
 
@@ -450,6 +497,518 @@ def render_crime_map():
         )
 
 
+def render_chronology():
+    st.markdown(
+        page_header(
+            "Event Chronology",
+            "Time-ordered event sequence with per-entry source ratings, plus a generated analytical report",
+        ),
+        unsafe_allow_html=True,
+    )
+    st.caption(f":warning: {DISCLAIMER}")
+
+    df = load_seizure_data()
+    filtered, filters, _ = _sidebar_filters(df)
+
+    if filtered.empty:
+        st.warning("No records match the current filters. Widen the scope to build a chronology.")
+        return
+
+    stats = compute_statistics(filtered)
+    chronology = build_chronology(filtered)
+    gaps = temporal_gaps(filtered, threshold_days=45)
+    weak = filtered[~filtered["source_reliability"].isin(["A", "B"])]
+
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.markdown(metric_card(f"{len(chronology):,}", "Entries"), unsafe_allow_html=True)
+    with c2:
+        span = f"{filtered['date'].min():%b %Y} – {filtered['date'].max():%b %Y}"
+        st.markdown(metric_card(span, "Coverage"), unsafe_allow_html=True)
+    with c3:
+        widest = f"{gaps[0]['days']}d" if gaps else "None"
+        st.markdown(metric_card(widest, "Longest Gap (45d+)"), unsafe_allow_html=True)
+    with c4:
+        share = len(weak) / len(filtered) * 100 if len(filtered) else 0
+        st.markdown(
+            metric_card(f"{share:.0f}%", "Weakly Rated Sources"), unsafe_allow_html=True
+        )
+
+    st.markdown("")
+
+    timeline = build_timeline_figure(filtered)
+    if timeline is not None:
+        st.subheader("Timeline")
+        st.plotly_chart(timeline, use_container_width=True)
+        st.caption(
+            "Marker size reflects estimated value. Hover an event for its "
+            "chronology entry and Admiralty source rating."
+        )
+
+    tempo = build_tempo_figure(filtered)
+    if tempo is not None:
+        st.subheader("Event tempo")
+        st.plotly_chart(tempo, use_container_width=True)
+
+    st.markdown("---")
+
+    tab_chron, tab_gaps, tab_report = st.tabs(
+        ["Chronology", "Gaps & sourcing", "Analytical report"]
+    )
+
+    with tab_chron:
+        st.dataframe(
+            chronology,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Date": st.column_config.DateColumn("Date", format="YYYY-MM-DD", width="small"),
+                "Event": st.column_config.TextColumn("Event", width="large"),
+                "Est. Value (USD)": st.column_config.NumberColumn(
+                    "Est. Value (USD)", format="$%d"
+                ),
+                "Admiralty": st.column_config.TextColumn("Admiralty", width="small"),
+                "Ref": st.column_config.TextColumn("Ref", width="small"),
+            },
+        )
+        st.download_button(
+            "Download chronology (CSV)",
+            chronology.to_csv(index=False),
+            "sea_event_chronology.csv",
+            "text/csv",
+        )
+
+    with tab_gaps:
+        st.markdown("**Intervals of 45 days or more with no recorded event**")
+        if gaps:
+            gap_df = pd.DataFrame(
+                [
+                    {
+                        "From": g["start"].date(),
+                        "To": g["end"].date(),
+                        "Days": g["days"],
+                    }
+                    for g in gaps
+                ]
+            )
+            st.dataframe(gap_df, use_container_width=True, hide_index=True)
+            st.markdown(
+                '<div class="info-box">A gap may be a genuine lull, a collection '
+                "blind spot, or a reporting interruption. The three are not "
+                "distinguishable from this dataset alone, so the gap is reported "
+                "rather than smoothed over.</div>",
+                unsafe_allow_html=True,
+            )
+        else:
+            st.caption("No interval of 45 days or more within the current scope.")
+
+        st.markdown("**Source-rating profile**")
+        st.dataframe(
+            reliability_profile(filtered),
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Share": st.column_config.NumberColumn("Share (%)", format="%.1f"),
+            },
+        )
+
+    with tab_report:
+        st.markdown(
+            '<div class="info-box">The report states its key judgement first, '
+            "derives its confidence level from the source-rating profile of the "
+            "records in scope, and lists the gaps that limit it. Attaching the "
+            "hypothesis matrix adds the ranked explanations and the evidence the "
+            "leading hypothesis depends on.</div>",
+            unsafe_allow_html=True,
+        )
+
+        attach_ach = st.checkbox("Attach hypothesis matrix (ACH)", value=True)
+        attach_register = st.checkbox("Attach evidence register", value=True)
+
+        scenario = SCENARIOS["Mekong corridor seizure rise (2022-2024)"] if attach_ach else None
+        register = verify_register() if attach_register else None
+
+        report = build_analyst_report(filtered, filters, stats, scenario, register)
+
+        st.download_button(
+            "Download analytical report (Markdown)",
+            report,
+            "sea_analytical_report.md",
+            "text/markdown",
+            type="primary",
+        )
+        with st.expander("Preview report", expanded=False):
+            st.markdown(report)
+
+
+def _score_css(value: str) -> str:
+    palette = {
+        "CC": "background-color: rgba(39,174,96,0.35); color: #eafaf1; font-weight: 600;",
+        "C": "background-color: rgba(39,174,96,0.16); color: #d6f5e3;",
+        "N": "background-color: rgba(149,165,166,0.12); color: #b9c2c4;",
+        "I": "background-color: rgba(231,76,60,0.16); color: #fbdcd8;",
+        "II": "background-color: rgba(231,76,60,0.35); color: #fdeae7; font-weight: 600;",
+    }
+    return palette.get(str(value), "")
+
+
+def render_hypothesis_testing():
+    st.markdown(
+        page_header(
+            "Hypothesis Testing — ACH",
+            "Analysis of Competing Hypotheses: rank explanations by the evidence against them, not for them",
+        ),
+        unsafe_allow_html=True,
+    )
+    st.caption(f":warning: {DISCLAIMER}")
+
+    scenario_name = st.selectbox("Analytical question", options=list(SCENARIOS.keys()))
+    scenario = SCENARIOS[scenario_name]
+
+    st.markdown(f"**{scenario.question}**")
+    if scenario.analytic_note:
+        st.markdown(
+            f'<div class="info-box">{scenario.analytic_note}</div>',
+            unsafe_allow_html=True,
+        )
+
+    results = score_scenario(scenario)
+    keys = scenario.hypothesis_keys
+    excluded = non_diagnostic_evidence(scenario)
+    sensitivity = sensitivity_analysis(scenario)
+    load_bearing = [f for f in sensitivity if f["changes_conclusion"]]
+
+    leader, runner_up = results[0], results[1] if len(results) > 1 else None
+    margin = round(runner_up.inconsistency - leader.inconsistency, 3) if runner_up else None
+
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.markdown(
+            metric_card(leader.hypothesis.key, "Least Contradicted"), unsafe_allow_html=True
+        )
+    with c2:
+        st.markdown(
+            metric_card(f"{leader.inconsistency:.2f}", "Inconsistency Score"),
+            unsafe_allow_html=True,
+        )
+    with c3:
+        st.markdown(
+            metric_card(f"{margin:.2f}" if margin is not None else "—", "Margin Over Next"),
+            unsafe_allow_html=True,
+        )
+    with c4:
+        st.markdown(
+            metric_card(str(len(load_bearing)), "Load-Bearing Items"),
+            unsafe_allow_html=True,
+        )
+
+    if margin is not None and margin < 0.5:
+        st.warning(
+            f"**{leader.hypothesis.key}** leads **{runner_up.hypothesis.key}** by only "
+            f"{margin:.2f}. The evidence does not separate them; both should be "
+            "carried forward rather than reporting a single answer."
+        )
+
+    st.markdown("---")
+    st.subheader("Hypothesis ranking")
+    st.caption(
+        "Ranked by weighted inconsistency, ascending. A hypothesis is judged by "
+        "the weight of evidence that contradicts it — evidence consistent with a "
+        "hypothesis is weak support, because it is usually consistent with rival "
+        "hypotheses too."
+    )
+
+    ranking = pd.DataFrame(
+        [
+            {
+                "Rank": rank,
+                "H": r.hypothesis.key,
+                "Hypothesis": r.hypothesis.statement,
+                "Inconsistency": r.inconsistency,
+                "Consistency": r.consistency,
+                "Contradicted by": ", ".join(r.contradicting) or "—",
+            }
+            for rank, r in enumerate(results, 1)
+        ]
+    )
+    st.dataframe(
+        ranking,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Rank": st.column_config.NumberColumn("Rank", width="small"),
+            "H": st.column_config.TextColumn("ID", width="small"),
+            "Hypothesis": st.column_config.TextColumn("Hypothesis", width="large"),
+            "Inconsistency": st.column_config.NumberColumn("Inconsistency", format="%.2f"),
+            "Consistency": st.column_config.NumberColumn("Consistency", format="%.2f"),
+        },
+    )
+
+    st.markdown("---")
+    st.subheader("Evidence matrix")
+
+    matrix = pd.DataFrame(matrix_rows(scenario))
+    styled = matrix.style.apply(
+        lambda frame: pd.DataFrame(
+            [[_score_css(v) for v in row] for row in frame.values],
+            index=frame.index,
+            columns=frame.columns,
+        ),
+        axis=None,
+        subset=keys,
+    )
+    st.dataframe(
+        styled,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Evidence": st.column_config.TextColumn("Ref", width="small"),
+            "Statement": st.column_config.TextColumn("Evidence statement", width="large"),
+            "Admiralty": st.column_config.TextColumn("Rating", width="small"),
+            "Weight": st.column_config.NumberColumn("Weight", format="%.2f"),
+            "Diagnosticity": st.column_config.NumberColumn("Diagnosticity", format="%.2f"),
+        },
+    )
+    legend = "  •  ".join(f"**{code}** {label}" for code, label in SCORE_LABELS.items())
+    st.caption(legend)
+    st.caption(
+        "Weight is derived from the Admiralty rating: source reliability and "
+        "information credibility multiplied together, so a weakly sourced item "
+        "moves the ranking less."
+    )
+
+    if excluded:
+        st.markdown(
+            '<div class="info-box"><b>Excluded as non-diagnostic:</b> '
+            + ", ".join(e.key for e in excluded)
+            + ". An item consistent with every hypothesis cannot discriminate "
+            "between them, however reliable its source, so it is dropped from "
+            "scoring.</div>",
+            unsafe_allow_html=True,
+        )
+
+    st.markdown("---")
+    col_diag, col_sens = st.columns(2)
+
+    with col_diag:
+        st.subheader("Diagnosticity")
+        st.caption("Which evidence actually discriminates between the hypotheses.")
+        diag = pd.DataFrame(
+            [
+                {"Ref": e.key, "Rating": e.admiralty_rating, "Diagnosticity": d}
+                for e, d in diagnosticity_ranking(scenario)
+            ]
+        )
+        st.dataframe(
+            diag,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Diagnosticity": st.column_config.ProgressColumn(
+                    "Diagnosticity", min_value=0.0, max_value=2.0, format="%.2f"
+                ),
+            },
+        )
+
+    with col_sens:
+        st.subheader("Sensitivity")
+        st.caption("Remove one item at a time and re-rank; does the answer survive?")
+        if load_bearing:
+            for finding in load_bearing:
+                st.error(
+                    f"**{finding['evidence_key']}** ({finding['admiralty_rating']}) is "
+                    f"load-bearing — without it the leading hypothesis becomes "
+                    f"**{finding['leader_without_item']}**."
+                )
+            st.caption(
+                "A conclusion resting on a single item is a disclosed dependency, "
+                "not a finished judgement: that item may later prove wrong, or "
+                "have been planted."
+            )
+        else:
+            st.success(
+                "No single evidence item changes the ranking — the leading "
+                "hypothesis does not rest on one report."
+            )
+
+    st.markdown("---")
+    st.subheader("Hypotheses and monitoring indicators")
+    for result in results:
+        with st.expander(
+            f"{result.hypothesis.key} — {result.hypothesis.statement}", expanded=False
+        ):
+            st.markdown(
+                f"Inconsistency **{result.inconsistency:.2f}** · "
+                f"consistency **{result.consistency:.2f}** · "
+                f"contradicted by {', '.join(result.contradicting) or '—'}"
+            )
+            if result.hypothesis.indicators:
+                st.markdown("**Indicators that would confirm or weaken this:**")
+                for indicator in result.hypothesis.indicators:
+                    st.markdown(f"- {indicator}")
+
+    with st.expander("About this technique", expanded=False):
+        st.markdown(
+            """
+            **Analysis of Competing Hypotheses** was set out by Richards J. Heuer Jr.
+            in *Psychology of Intelligence Analysis* (CIA Center for the Study of
+            Intelligence, 1999). It exists to counter confirmation bias: rather than
+            assembling support for the first plausible explanation, the analyst lists
+            all credible hypotheses and works to refute them.
+
+            The steps applied here:
+
+            1. Enumerate the hypotheses, including the dull ones — a recording
+               artifact and an enforcement-success reading are both carried, so
+               neither is adopted by default.
+            2. Score every evidence item against every hypothesis.
+            3. Drop items that are consistent with all hypotheses: they have no
+               discriminating value.
+            4. Rank by **inconsistency**, ascending. The surviving hypothesis is the
+               one the evidence has failed to refute.
+            5. Weight each item by its Admiralty source rating, so sourcing quality
+               affects the conclusion.
+            6. Test sensitivity by removing items one at a time, to expose
+               conclusions that rest on a single report.
+            7. State indicators to monitor, turning a static judgement into a
+               collection requirement.
+            """
+        )
+
+
+def render_evidence_register():
+    st.markdown(
+        page_header(
+            "Evidence Register",
+            "Chain-of-custody record with live SHA-256 integrity verification",
+        ),
+        unsafe_allow_html=True,
+    )
+    st.caption(f":warning: {DISCLAIMER}")
+
+    entries = verify_register()
+    summary = register_summary(entries)
+    manifest = load_manifest()
+
+    c1, c2, c3, c4 = st.columns(4)
+    with c1:
+        st.markdown(metric_card(str(summary["total"]), "Registered Items"), unsafe_allow_html=True)
+    with c2:
+        st.markdown(metric_card(str(summary["verified"]), "Verified"), unsafe_allow_html=True)
+    with c3:
+        st.markdown(metric_card(str(summary["altered"]), "Altered"), unsafe_allow_html=True)
+    with c4:
+        st.markdown(
+            metric_card(str(summary["missing"] + summary["unregistered"]), "Missing / Unbaselined"),
+            unsafe_allow_html=True,
+        )
+
+    if summary["altered"]:
+        st.error(
+            f"{summary['altered']} artifact(s) no longer match the recorded "
+            "baseline. Any finding drawn from them is not reproducible until the "
+            "discrepancy is explained, and the manifest should only be "
+            "regenerated once the change is understood and intended."
+        )
+    elif manifest is None:
+        st.warning(
+            "No custody manifest found. Run `python -m src.evidence` to record a "
+            "baseline; until then integrity is unknown rather than confirmed."
+        )
+    else:
+        st.success(
+            "All registered artifacts match their recorded SHA-256 baseline."
+        )
+
+    st.markdown(
+        '<div class="info-box">The Berkeley Protocol requires that an '
+        "investigation be able to show, for every item it relies on, where it came "
+        "from, when it was acquired, who handled it, and that it has not changed "
+        "since. The check below is real: hashes are recomputed from the files on "
+        "disk and compared against a committed manifest, so editing any registered "
+        "artifact makes this page report ALTERED.</div>",
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("---")
+    st.subheader("Register")
+
+    register_df = pd.DataFrame(
+        [
+            {
+                "Exhibit": e.exhibit_id,
+                "Description": e.description,
+                "Artifact": e.relative_path,
+                "Acquired (UTC)": e.acquired_utc,
+                "Size (bytes)": e.size_bytes,
+                "SHA-256": e.sha256,
+                "Status": e.status,
+            }
+            for e in entries
+        ]
+    )
+
+    def _status_css(value: str) -> str:
+        if value == STATUS_VERIFIED:
+            return "background-color: rgba(39,174,96,0.25); color: #eafaf1; font-weight: 600;"
+        if value in (STATUS_ALTERED, STATUS_MISSING):
+            return "background-color: rgba(231,76,60,0.30); color: #fdeae7; font-weight: 600;"
+        return "background-color: rgba(243,156,18,0.22); color: #fdf3e2;"
+
+    styled_register = register_df.style.apply(
+        lambda frame: pd.DataFrame(
+            [[_status_css(v) for v in row] for row in frame.values],
+            index=frame.index,
+            columns=frame.columns,
+        ),
+        axis=None,
+        subset=["Status"],
+    )
+    st.dataframe(
+        styled_register,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Exhibit": st.column_config.TextColumn("Exhibit", width="small"),
+            "Description": st.column_config.TextColumn("Description", width="medium"),
+            "SHA-256": st.column_config.TextColumn("SHA-256", width="medium"),
+            "Status": st.column_config.TextColumn("Status", width="small"),
+        },
+    )
+
+    with st.expander("Handling caveats per exhibit", expanded=False):
+        for entry in entries:
+            st.markdown(f"**{entry.exhibit_id} — {entry.description}**")
+            st.caption(f"Origin: {entry.origin}")
+            st.caption(f"Handling: {entry.handling}")
+
+    st.markdown("---")
+    st.subheader("Custody log")
+    st.caption(
+        "Acquisition, baseline registration, and this session's verification — "
+        "the three events that can be evidenced for these artifacts."
+    )
+    st.dataframe(
+        pd.DataFrame(custody_log(entries)),
+        use_container_width=True,
+        hide_index=True,
+    )
+
+    if manifest:
+        st.caption(
+            f"Manifest baseline recorded {manifest.get('generated_utc', 'unknown')} "
+            f"using {manifest.get('hash_algorithm', 'SHA-256')}. "
+            "Regenerate with `python -m src.evidence` after any intended change."
+        )
+
+    st.download_button(
+        "Download register (CSV)",
+        register_df.to_csv(index=False),
+        "evidence_register.csv",
+        "text/csv",
+    )
+
+
 def _format_value(value: float, chain: str) -> str:
     if chain == "tron":
         return f"{value:,.2f}"
@@ -478,7 +1037,13 @@ def main():
 
         page = st.radio(
             "Navigation",
-            ["Crypto Wallet Tracer", "Crime Incident Map"],
+            [
+                "Crypto Wallet Tracer",
+                "Crime Incident Map",
+                "Event Chronology",
+                "Hypothesis Testing",
+                "Evidence Register",
+            ],
             label_visibility="collapsed",
         )
 
@@ -504,14 +1069,23 @@ def main():
                 **Methodology** follows the Berkeley Protocol
                 on Digital Open Source Investigations. See
                 METHODOLOGY.md for details.
+
+                **Analytic techniques:** Admiralty Code source
+                evaluation, event chronology, Analysis of
+                Competing Hypotheses (ACH), SHA-256 chain-of-
+                custody verification.
                 """,
                 unsafe_allow_html=True,
             )
 
-    if page == "Crypto Wallet Tracer":
-        render_wallet_tracer()
-    else:
-        render_crime_map()
+    pages = {
+        "Crypto Wallet Tracer": render_wallet_tracer,
+        "Crime Incident Map": render_crime_map,
+        "Event Chronology": render_chronology,
+        "Hypothesis Testing": render_hypothesis_testing,
+        "Evidence Register": render_evidence_register,
+    }
+    pages[page]()
 
 
 if __name__ == "__main__":
