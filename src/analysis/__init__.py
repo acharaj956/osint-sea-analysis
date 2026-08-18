@@ -1,0 +1,1 @@
+"""Structured analytic technique implementations."""
