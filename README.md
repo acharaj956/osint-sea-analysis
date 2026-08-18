@@ -43,6 +43,45 @@ cryptocurrency-enabled financial flows and regional drug trafficking patterns.
 - **SHA-256 dataset integrity** digest displayed in the data view
 - Exportable filtered datasets
 
+### Event Chronology
+- Time-ordered chronology of events, each entry carrying its own source rating
+  and reference number
+- Interactive **timeline** (events by country over time, sized by estimated value)
+  and monthly **event tempo** with cumulative overlay
+- **Temporal gap detection** — intervals with no recorded event are surfaced, not
+  smoothed over, since a gap may be a genuine lull, a collection blind spot, or a
+  reporting interruption
+- Source-rating profile for the records in scope
+- **Generated analytical report** (Markdown export): key judgement first, a
+  confidence level derived from the source profile, and an explicit gaps section
+
+### Hypothesis Testing — ACH
+- **Analysis of Competing Hypotheses** over a worked scenario, ranking
+  explanations by the evidence *against* them rather than for them
+- Colour-coded evidence matrix with per-item **diagnosticity** scoring
+- Evidence weighted by its Admiralty rating, so source quality affects the result
+- Non-diagnostic evidence identified and excluded from scoring
+- **Sensitivity analysis** — flags conclusions that rest on a single report
+- Monitoring indicators per hypothesis, turning a judgement into a collection
+  requirement
+
+### Evidence Register
+- Chain-of-custody register over the project's own evidentiary artifacts
+- **Live SHA-256 verification** against a committed manifest: editing any
+  registered file makes the page report `ALTERED`
+- Per-exhibit origin, acquisition timestamp, handling caveat, and custody log
+
+## Analytic techniques implemented
+
+| Technique | Where | Notes |
+|---|---|---|
+| Admiralty Code source evaluation | `data/build_dataset.py`, `src/analysis/ach.py` | Reliability A–F × credibility 1–6, converted into evidence weights |
+| Analysis of Competing Hypotheses | `src/analysis/ach.py` | Ranked by weighted inconsistency, per Heuer; diagnosticity and sensitivity included |
+| Event chronology & timeline | `src/analysis/chronology.py` | Narrative chronology, timeline, tempo, temporal gap detection |
+| Link / network analysis | `src/blockchain/graph.py` | Directed transaction graph, value-weighted edges |
+| Chain of custody & integrity | `src/evidence.py`, `src/integrity.py` | SHA-256 baseline manifest with live verification |
+| Structured reporting | `src/reporting.py` | BLUF structure, derived confidence level, explicit gaps |
+
 ## Tradecraft & methodology
 
 This tool is built around standard open-source-investigation practice, following
@@ -51,14 +90,20 @@ the [Berkeley Protocol on Digital Open Source Investigations](https://www.ohchr.
 
 Key principles applied:
 - **Source evaluation** — records are rated on the Admiralty/NATO scale
-  (source reliability A–F, information credibility 1–6)
-- **Data integrity** — a SHA-256 digest is computed over the source dataset to
-  demonstrate tamper-evidence
+  (source reliability A–F, information credibility 1–6), and those ratings carry
+  through into how much each item can move an analytical conclusion
+- **Data integrity** — SHA-256 digests are computed over the registered artifacts
+  and checked against a committed manifest, so tampering is detected rather than
+  merely deterred
+- **Structured reasoning** — competing explanations are tested by seeking
+  refutation, and conclusions that depend on a single report are disclosed
 - **Honest provenance** — synthetic data is labeled as synthetic everywhere; no
   fabricated record is presented as a real, sourced report
+- **Stated gaps** — every generated report ends with what is *not* known, and
+  confidence is derived from the sourcing rather than asserted
 - **Ethical collection** — live mode queries only publicly available on-chain data
 - **Reproducibility** — the dataset is produced by a documented build step
-  (`data/build_dataset.py`)
+  (`data/build_dataset.py`), and the analytical logic is covered by tests
 
 ## Data sources
 
@@ -85,6 +130,9 @@ pip install -r requirements.txt
 
 # (Optional) regenerate the illustrative dataset with provenance metadata
 python data/build_dataset.py
+
+# (Optional) re-record the SHA-256 custody baseline after an intended data change
+python -m src.evidence
 
 # Run the dashboard
 streamlit run app.py
@@ -120,11 +168,20 @@ osint-sea-analysis/
 ├── .streamlit/config.toml     # Streamlit theme configuration
 ├── data/
 │   ├── sea_drug_seizures.csv  # Synthetic, UNODC-trend-based seizure dataset
-│   └── build_dataset.py       # Reproducible dataset build / enrichment step
+│   ├── build_dataset.py       # Reproducible dataset build / enrichment step
+│   └── evidence_manifest.json # SHA-256 custody baseline for registered artifacts
+├── tests/
+│   └── test_analysis.py       # Tests for ACH, chronology, integrity, reporting
 └── src/
     ├── config.py              # Application configuration
     ├── styles.py              # UI styling and components
     ├── integrity.py           # SHA-256 data-integrity helpers
+    ├── evidence.py            # Evidence register & chain-of-custody verification
+    ├── reporting.py           # Analytical report generation
+    ├── analysis/
+    │   ├── ach.py             # Analysis of Competing Hypotheses engine
+    │   ├── scenarios.py       # Worked ACH scenario (illustrative)
+    │   └── chronology.py      # Chronology, timeline, tempo, gap detection
     ├── blockchain/
     │   ├── client.py          # Blockchair & TronGrid API clients
     │   ├── graph.py           # Network graph construction & rendering
@@ -134,6 +191,17 @@ osint-sea-analysis/
     └── crime_map/
         ├── loader.py          # Data loading, filtering, statistics
         └── builder.py         # Folium map construction
+```
+
+## Tests
+
+The analytical logic is covered by tests — the ACH scoring rules, Admiralty
+weighting, chronology construction, integrity verification, and report
+generation:
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest
 ```
 
 ## Data dictionary (`data/sea_drug_seizures.csv`)
