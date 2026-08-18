@@ -1,4 +1,6 @@
-streamlit>=1.38.0
+# 1.51 is the first release where every element used here accepts the current
+# width API: buttons in 1.48, dataframes in 1.49, plotly charts in 1.51.
+streamlit>=1.51.0
 pandas>=2.0.0
 numpy>=1.24.0
 networkx>=3.1

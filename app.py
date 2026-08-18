@@ -125,7 +125,7 @@ def render_wallet_tracer():
         )
         return
 
-    trace_clicked = st.button("Trace Wallet", type="primary", use_container_width=True)
+    trace_clicked = st.button("Trace Wallet", type="primary", width="stretch")
 
     if not trace_clicked and f"traced_{address}" not in st.session_state:
         return
@@ -260,7 +260,7 @@ def render_wallet_tracer():
 
         st.dataframe(
             tx_display,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "tx_hash": st.column_config.TextColumn("TX Hash", width="medium"),
@@ -409,7 +409,7 @@ def render_crime_map():
                     margin=dict(l=0, r=20, t=40, b=20),
                     height=350,
                 )
-                st.plotly_chart(fig_country, use_container_width=True)
+                st.plotly_chart(fig_country, width="stretch")
 
         with chart_c2:
             by_drug = stats.get("by_drug_type", {})
@@ -436,7 +436,7 @@ def render_crime_map():
                     margin=dict(l=20, r=20, t=40, b=20),
                     height=350,
                 )
-                st.plotly_chart(fig_drug, use_container_width=True)
+                st.plotly_chart(fig_drug, width="stretch")
 
         by_year = stats.get("by_year", {})
         if by_year:
@@ -456,7 +456,7 @@ def render_crime_map():
                 margin=dict(l=0, r=20, t=40, b=20),
                 height=300,
             )
-            st.plotly_chart(fig_year, use_container_width=True)
+            st.plotly_chart(fig_year, width="stretch")
 
             yoy = stats.get("yoy_value_growth")
             if yoy is not None:
@@ -469,7 +469,7 @@ def render_crime_map():
         display_df = filtered.drop(columns=["lat", "lon"], errors="ignore")
         st.dataframe(
             display_df,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "date": st.column_config.DateColumn("Date", format="YYYY-MM-DD"),
@@ -539,7 +539,7 @@ def render_chronology():
     timeline = build_timeline_figure(filtered)
     if timeline is not None:
         st.subheader("Timeline")
-        st.plotly_chart(timeline, use_container_width=True)
+        st.plotly_chart(timeline, width="stretch")
         st.caption(
             "Marker size reflects estimated value. Hover an event for its "
             "chronology entry and Admiralty source rating."
@@ -548,7 +548,7 @@ def render_chronology():
     tempo = build_tempo_figure(filtered)
     if tempo is not None:
         st.subheader("Event tempo")
-        st.plotly_chart(tempo, use_container_width=True)
+        st.plotly_chart(tempo, width="stretch")
 
     st.markdown("---")
 
@@ -559,7 +559,7 @@ def render_chronology():
     with tab_chron:
         st.dataframe(
             chronology,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "Date": st.column_config.DateColumn("Date", format="YYYY-MM-DD", width="small"),
@@ -591,7 +591,7 @@ def render_chronology():
                     for g in gaps
                 ]
             )
-            st.dataframe(gap_df, use_container_width=True, hide_index=True)
+            st.dataframe(gap_df, width="stretch", hide_index=True)
             st.markdown(
                 '<div class="info-box">A gap may be a genuine lull, a collection '
                 "blind spot, or a reporting interruption. The three are not "
@@ -605,7 +605,7 @@ def render_chronology():
         st.markdown("**Source-rating profile**")
         st.dataframe(
             reliability_profile(filtered),
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "Share": st.column_config.NumberColumn("Share (%)", format="%.1f"),
@@ -733,7 +733,7 @@ def render_hypothesis_testing():
     )
     st.dataframe(
         ranking,
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
         column_config={
             "Rank": st.column_config.NumberColumn("Rank", width="small"),
@@ -759,7 +759,7 @@ def render_hypothesis_testing():
     )
     st.dataframe(
         styled,
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
         column_config={
             "Evidence": st.column_config.TextColumn("Ref", width="small"),
@@ -801,7 +801,7 @@ def render_hypothesis_testing():
         )
         st.dataframe(
             diag,
-            use_container_width=True,
+            width="stretch",
             hide_index=True,
             column_config={
                 "Diagnosticity": st.column_config.ProgressColumn(
@@ -966,7 +966,7 @@ def render_evidence_register():
     )
     st.dataframe(
         styled_register,
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
         column_config={
             "Exhibit": st.column_config.TextColumn("Exhibit", width="small"),
@@ -990,7 +990,7 @@ def render_evidence_register():
     )
     st.dataframe(
         pd.DataFrame(custody_log(entries)),
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
 
