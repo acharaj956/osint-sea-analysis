@@ -1,0 +1,36 @@
+{
+  "artifacts": {
+    "EX-001": {
+      "acquired_utc": "2026-08-18 08:21:35Z",
+      "relative_path": "data/sea_drug_seizures.csv",
+      "sha256": "ee82e19abcfcea4f78e044b8095ee353e5e8845475fd396f2d967816678d938d",
+      "size_bytes": 21837
+    },
+    "EX-002": {
+      "acquired_utc": "2026-08-18 08:21:35Z",
+      "relative_path": "data/build_dataset.py",
+      "sha256": "2cffa837b5e1c706d25c2ee17766b4345470fcb2f21969d11d3ba55cccfb1d7b",
+      "size_bytes": 2622
+    },
+    "EX-003": {
+      "acquired_utc": "2026-08-18 08:21:35Z",
+      "relative_path": "src/blockchain/sanctions.py",
+      "sha256": "8ad5ec650f5841a74c0f09543f95e6accc2765bdcc69a51730795b88593eca10",
+      "size_bytes": 5378
+    },
+    "EX-004": {
+      "acquired_utc": "2026-08-18 08:21:35Z",
+      "relative_path": "src/blockchain/demo_data.py",
+      "sha256": "80c821fca7b09698f014f029c279c5226a449cc0a9152766675684ffaa0dd661",
+      "size_bytes": 14412
+    },
+    "EX-005": {
+      "acquired_utc": "2026-08-18 08:26:25Z",
+      "relative_path": "src/analysis/scenarios.py",
+      "sha256": "a7f049fb1a7c91ed813adb7df541833d6ab1628794d465c10a1625aaa8c4f251",
+      "size_bytes": 8201
+    }
+  },
+  "generated_utc": "2026-08-18 08:28:20Z",
+  "hash_algorithm": "SHA-256"
+}
