@@ -24,6 +24,7 @@ from src.analysis.ach import (
 )
 from src.analysis.chronology import build_chronology, reliability_profile, temporal_gaps
 from src.analysis.scenarios import MEKONG_SURGE
+from src.config import BASE_DIR
 from src.evidence import (
     REGISTERED_ARTIFACTS,
     STATUS_ALTERED,
@@ -263,6 +264,30 @@ def test_register_summary_accounts_for_every_entry():
     assert (
         summary["verified"] + summary["altered"] + summary["missing"]
         + summary["unregistered"] == summary["total"]
+    )
+
+
+def test_registered_artifacts_use_lf_endings():
+    """Guards the custody baseline against line-ending drift.
+
+    A CRLF checkout changes the hash of an otherwise untouched file, so the
+    same commit would verify on one platform and report ALTERED on another.
+    `.gitattributes` pins the working tree to LF; this test fails if that slips.
+    """
+    for artifact in REGISTERED_ARTIFACTS:
+        raw = (BASE_DIR / artifact.relative_path).read_bytes()
+        assert b"\r\n" not in raw, f"{artifact.relative_path} contains CRLF line endings"
+
+
+def test_committed_baseline_matches_the_current_artifacts():
+    """Fails if a registered artifact was edited without re-recording the
+    baseline, which is exactly the drift the register exists to catch."""
+    unverified = [
+        (e.exhibit_id, e.status) for e in verify_register() if e.status != STATUS_VERIFIED
+    ]
+    assert not unverified, (
+        f"Artifacts out of step with the manifest: {unverified}. "
+        "Re-record with `python -m src.evidence` once the change is intended."
     )
 
 

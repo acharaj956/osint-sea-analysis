@@ -1,36 +1,36 @@
 {
   "artifacts": {
     "EX-001": {
-      "acquired_utc": "2026-08-18 08:21:35Z",
+      "acquired_utc": "2026-08-18 08:40:05Z",
       "relative_path": "data/sea_drug_seizures.csv",
-      "sha256": "ee82e19abcfcea4f78e044b8095ee353e5e8845475fd396f2d967816678d938d",
-      "size_bytes": 21837
+      "sha256": "006c3b0b7c5671a76a05e3b798a3234f7429d1fcd80fa391b61a852ea134ae63",
+      "size_bytes": 21688
     },
     "EX-002": {
-      "acquired_utc": "2026-08-18 08:21:35Z",
+      "acquired_utc": "2026-08-18 08:40:05Z",
       "relative_path": "data/build_dataset.py",
-      "sha256": "2cffa837b5e1c706d25c2ee17766b4345470fcb2f21969d11d3ba55cccfb1d7b",
-      "size_bytes": 2622
+      "sha256": "510db7c57505bb926cf11ae81c039d2479907e3c0feba625cf79477e3484390b",
+      "size_bytes": 2558
     },
     "EX-003": {
-      "acquired_utc": "2026-08-18 08:21:35Z",
+      "acquired_utc": "2026-08-18 08:40:05Z",
       "relative_path": "src/blockchain/sanctions.py",
-      "sha256": "8ad5ec650f5841a74c0f09543f95e6accc2765bdcc69a51730795b88593eca10",
-      "size_bytes": 5378
+      "sha256": "298fdba9ac559dc9566aab50218cd6e54b3322dd1cad022a74ad342d02e4c42b",
+      "size_bytes": 5242
     },
     "EX-004": {
-      "acquired_utc": "2026-08-18 08:21:35Z",
+      "acquired_utc": "2026-08-18 08:40:05Z",
       "relative_path": "src/blockchain/demo_data.py",
-      "sha256": "80c821fca7b09698f014f029c279c5226a449cc0a9152766675684ffaa0dd661",
-      "size_bytes": 14412
+      "sha256": "59194cc769dce814e01722ca9c5e1806d8b0cb29075dbb8fc7fc245e5ab89031",
+      "size_bytes": 14077
     },
     "EX-005": {
-      "acquired_utc": "2026-08-18 08:26:25Z",
+      "acquired_utc": "2026-08-18 08:40:05Z",
       "relative_path": "src/analysis/scenarios.py",
       "sha256": "a7f049fb1a7c91ed813adb7df541833d6ab1628794d465c10a1625aaa8c4f251",
       "size_bytes": 8201
     }
   },
-  "generated_utc": "2026-08-18 08:28:20Z",
+  "generated_utc": "2026-08-18 08:40:15Z",
   "hash_algorithm": "SHA-256"
 }
