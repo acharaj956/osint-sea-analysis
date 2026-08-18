@@ -155,9 +155,13 @@ def load_manifest() -> dict | None:
 
 
 def write_manifest(manifest: dict | None = None) -> Path:
-    """Write the manifest to disk, establishing a new custody baseline."""
+    """Write the manifest to disk, establishing a new custody baseline.
+
+    Newlines are written explicitly as LF so the manifest is byte-identical
+    whichever platform records the baseline.
+    """
     manifest = manifest or build_manifest()
-    with open(MANIFEST_PATH, "w", encoding="utf-8") as fh:
+    with open(MANIFEST_PATH, "w", encoding="utf-8", newline="\n") as fh:
         json.dump(manifest, fh, indent=2, sort_keys=True)
         fh.write("\n")
     return MANIFEST_PATH
